@@ -1,0 +1,1 @@
+Program is simulating car rental system. You can log in and log out, rent and return a car. 

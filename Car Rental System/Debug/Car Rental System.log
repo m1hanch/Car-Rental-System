@@ -1,0 +1,4 @@
+﻿  Car Rental System.cpp
+D:\С++\My projects\Car Rental System\Car Rental System\Car Rental System.cpp(324,14): warning C4101: carOp: неиспользованная локальная переменная
+D:\С++\My projects\Car Rental System\Car Rental System\Car Rental System.cpp(53): warning C4715: login: значение возвращается не при всех путях выполнения
+  Car Rental System.vcxproj -> D:\С++\My projects\Car Rental System\Debug\Car Rental System.exe

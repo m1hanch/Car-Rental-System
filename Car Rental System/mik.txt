@@ -1,0 +1,12 @@
+Rented: Volkswagen Passat
+Rent time: 19.8.2021	12:16:19
+Returned: Volkswagen Passat
+Returned time: 19.08.2021	12:20:19
+Rented: BMW X5
+Rent time: 19.8.2021	13:2:5
+Returned: BMW X5
+Returned time: 12.10.2021	19:52:56
+Rented: Hyundai Tucson
+Rent time: 12.10.2021	20:9:23
+Returned: Hyundai Tucson
+Returned time: 12.10.2021	20:16:41
