@@ -1,5 +1,3 @@
-﻿// Car Rental System.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
 #include <iostream>
 #include<fstream>
 #include<string>
@@ -52,12 +50,31 @@ string login()
     delete[] data;
 }
 
+bool if_empty(std::ifstream& pFile)
+{
+    return pFile.peek() == std::ifstream::traits_type::eof();
+}
+
 void reg()
 {
     ofstream fout;
     string username, pass;
     cout << "Login: ";
     cin >> username;
+    ifstream fin;
+    fin.open("Users.txt");
+    string word;
+    while (!fin.eof() and !if_empty(fin))
+    {
+        fin >> word;
+        if (word == username)
+        {
+            system("cls");
+            cout << "Sorry, user with this username already exists. Please, try another one\n";
+            cout << "Login: ";
+            cin >> username;
+        }
+    }
     cout << "Password: ";
     cin >> pass;
     fout.open("Users.txt", ios::app);
@@ -191,7 +208,7 @@ public:
     }
     string GetMonth()
     {
-        return IntToString(mon);
+            return IntToString(mon);
     }
     string GetDay()
     {
@@ -215,14 +232,16 @@ public:
     }
 };
 
+
+
 bool ifRented(string username)
 {
-    fstream fin;
+    ifstream fin;
     string filename = username + ".txt";
     string word, car;
     int rent =0, ret=0;
     fin.open(filename);
-    while (!fin.eof())
+    while (!fin.eof() and !if_empty(fin))
     {
         fin >> word;
         if (word == "Rented:") rent++;
@@ -255,20 +274,11 @@ void rent(string username)
     string fileName = username + ".txt";
     if (ifRented(username))
     {
-        cout << "Sorry, you have already rented a car. You need to return it first"<<endl;
+        cout << "Sorry, you have already rented a car. You need to return it first.\n"<<endl;
     }
     else
     {
         cout << "Which car do you want to rent?" << endl;
-        /*cout << "Car\t\t\tPrice (per day)" << endl;
-        for (int i = 0; i < 9; i++)
-        {
-            if(i==0 || i ==2 || i==6) 
-                cout << i + 1 << "." << a.GetMark(i) << " " << a.GetModel(i)<<"\t"<< a.GetPrice(i) << endl;
-
-            else
-                cout << i + 1 << "." << a.GetMark(i) << " " << a.GetModel(i) << "\t\t" << a.GetPrice(i) << endl;
-        }*/
         CarTab(a);
         cin >> CarOp;
         CarOp--;
@@ -284,18 +294,23 @@ void rent(string username)
         cout << "Do you want to see car's properties?" << endl;
         cout << "1.Yes\n2.No\n";
         cin >> Prop;
+        while (Prop>2)
+        {
+            cout << "Wrong number, please try again\n\n";
+            cin >> Prop;
+        }
         if (Prop == 1)
         {
             system("cls");
             a.SetCar(CarOp);
             a.Properties();
         }
-        cout << "\nCar successfully rented!";
+        cout << "\nCar successfully rented!\n\n";
         fin.open(fileName, ios::app);
         fin << "Rented: " << a.GetMark(CarOp) << " " << a.GetModel(CarOp) << endl;
-        time_t now = time(0);
-        tm* ltm = localtime(&now);
-        fin << "Rent time: " << ltm->tm_mday << "." << 1 + ltm->tm_mon << "." << 1900 + ltm->tm_year << "\t" << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec << endl;
+        Time t;
+        fin << "Rent time: " << t.GetDay() << "." << t.GetMonth() << "." << t.GetYear() << "\t" << t.GetHour() << ":"
+            << t.GetMinute() << ":" << t.GetSecond() << endl;
         fin.close();
     }
 }
@@ -350,7 +365,7 @@ void Return(string username)
                 << a.GetMinute() << ":" << a.GetSecond() << endl;
             fout.close();
             system("cls");
-            cout << "Car successfully returned";
+            cout << "Car successfully returned\n\n";
         }
         
         fin.close();
@@ -359,25 +374,26 @@ void Return(string username)
     }
     else
     {
-        cout << "You have nothing to return";
+        cout << "You have nothing to return\n\n";
     }
     
     
     
 }
 
-#define n
 int main()
 {
-#ifdef n
-    string username;
-    int RentOption, status;
-    regSys(username, status);
-    bool i = true;
-    //cout << "\n\n" << username;
-    if (status == 3) return 0;
-        
-        
+    while (true)
+    {
+
+        string username;
+        int RentOption, status;
+        regSys(username, status);
+        bool i = true;
+        //cout << "\n\n" << username;
+        if (status == 3) return 0;
+
+
         while (i == true)
         {
             cout << "1.Rent Car\n" << "2.Return Car\n";
@@ -401,6 +417,6 @@ int main()
                 cout << "Sorry, you've chosen wrong number. Please try again\n\n";
             }
         }
-#endif
+    }
     return 0;
 }
